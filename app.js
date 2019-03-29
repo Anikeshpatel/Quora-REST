@@ -35,7 +35,9 @@ app.use('/auth', authRoutes)
 //         data
 //     })
 // })
-mongoose.connect(`mongodb://${process.env.MongoUser}:${process.env.MongoPassword}@ds127376.mlab.com:27376/quora`).then(() => {
+mongoose.connect(`mongodb://${process.env.MongoUser}:${process.env.MongoPassword}@ds127376.mlab.com:27376/quora`, {
+    useNewUrlParser: true
+}).then(() => {
     const PORT = process.env.PORT || 3000
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`)

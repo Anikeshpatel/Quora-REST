@@ -1,18 +1,43 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
+const express = require('express')
+const path = require('path')
+const logger = require('morgan')
+const mongoose = require('mongoose')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const authRoutes = require('./routes/auth')
 
-var app = express();
+const app = express()
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+    )
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    next()
+})
+app.get('/', (req, res) => {
+    res.send("<h1 align='center'>Quora Clone</h1>")
+})
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/auth', authRoutes)
 
-app.listen(process.env.PORT || 3000);
+// app.use((err, req, res) => {
+//     console.log(err)
+//     const status = err.statusCode || 500
+//     const msg = err.message
+//     const data = err.data
+//     res.status(status).json({
+//         msg,
+//         data
+//     })
+// })
+mongoose.connect(`mongodb://${process.env.MongoUser}:${process.env.MongoPassword}@ds127376.mlab.com:27376/quora`).then(() => {
+    const PORT = process.env.PORT || 3000
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`)
+    });
+}).catch((err) => console.log(err.message))

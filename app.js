@@ -29,7 +29,7 @@ app.use('/question', questionRoutes)
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     console.log(err.message)
     const status = err.statusCode || 500
     const msg = err.message

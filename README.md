@@ -5,15 +5,13 @@
 
 HTTP Methods
 
-| Method | Route        | Desc |
+| Method | Route        | Body |
 |--------|--------------|------|
-| POST   | /auth/login  |   |
-|        |           |  `{ `                |
+| POST   | /auth/login  | `{ `  |
 |        |           |  `   "email": "username@domain.com",`|
 |        |           |  `   "password": "******" `|
 |        |           |  `}`                      |
-| POST   | /auth/signup |
-|        |           |  `{ `                |
+| POST   | /auth/signup |`{ `                |
 |        |           |  `   "name": "Name Surname",`|
 |        |           |  `   "email": "username@domain.com",`|
 |        |           |  `   "password": "******" `|

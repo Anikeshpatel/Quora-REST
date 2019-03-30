@@ -4,10 +4,12 @@ const logger = require('morgan')
 const mongoose = require('mongoose')
 
 const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
+const questionRoutes = require('./routes/question')
 
 const app = express()
 
-app.use(logger('dev'))
+// app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use((req, res, next) => {
@@ -23,18 +25,20 @@ app.get('/', (req, res) => {
     res.send("<h1 align='center'>Quora Clone</h1>")
 })
 
+app.use('/question', questionRoutes)
+app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
 
-// app.use((err, req, res) => {
-//     console.log(err)
-//     const status = err.statusCode || 500
-//     const msg = err.message
-//     const data = err.data
-//     res.status(status).json({
-//         msg,
-//         data
-//     })
-// })
+app.use((err, req, res) => {
+    console.log(err.message)
+    const status = err.statusCode || 500
+    const msg = err.message
+    const data = err.data
+    res.status(status).json({
+        msg,
+        data
+    })
+})
 mongoose.connect(`mongodb://${process.env.MongoUser}:${process.env.MongoPassword}@ds127376.mlab.com:27376/quora`, {
     useNewUrlParser: true
 }).then(() => {

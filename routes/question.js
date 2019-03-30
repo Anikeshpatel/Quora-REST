@@ -33,7 +33,7 @@ router.post('/', isAuth, async (req, res, next) => {
     }
 })
 
-router.post('/:queId/answer', isAuth, async (req, res, next) => {
+router.put('/:queId/answer', isAuth, async (req, res, next) => {
     try {
 
         const questionId = req.params.queId

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const answerSchema = new Schema({
     author: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true,
         ref: 'User'
     },
@@ -20,7 +20,7 @@ const answerSchema = new Schema({
 
 const questionSchema = new Schema({
     author: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         required: true,
         ref: 'User'
     },
